@@ -3,6 +3,7 @@ import json
 import time
 import joblib
 import pandas as pd
+import argparse
 
 from sklearn.model_selection import (
     train_test_split,
@@ -34,6 +35,17 @@ RANDOM_STATE = 42
 
 DATA_PATH = "data/onlinefraud.csv"
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--data",
+    type=str,
+    default=DATA_PATH
+)
+args = parser.parse_args()
+ 
+DATA_PATH = args.data
+
+
 MODEL_DIR = "models"
 RESULTS_DIR = "results"
 
@@ -45,6 +57,7 @@ MAX_TUNING_SAMPLES = 250_000
 
 os.makedirs(MODEL_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
+
 
 
 # ============================================================

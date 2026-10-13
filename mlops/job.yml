@@ -1,0 +1,27 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+ 
+type: command
+ 
+display_name: online-fraud-training
+experiment_name: online-fraud-detection
+ 
+code: ../
+ 
+command: >-
+  python src/train.py
+  --data ${{inputs.training_data}}
+ 
+inputs:
+  training_data:
+    type: uri_file
+    path: azureml:online-fraud-data:1
+    mode: ro_mount
+ 
+environment:
+  azureml:AzureML-sklearn-1.5-ubuntu20.04-py310-cpu@latest
+ 
+compute: azureml:mlopscompute
+ 
+tags:
+  project: online-fraud-detection
+  framework: scikit-learn
