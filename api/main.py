@@ -24,7 +24,21 @@ MODEL_PATH = (
 # Load trained model
 # --------------------------------------------------
  
-model = joblib.load(MODEL_PATH)
+model = None
+
+def load_model():
+    global model
+ 
+    if model is None:
+        if not MODEL_PATH.exists():
+            raise FileNotFoundError(
+                f"Model file not found: {MODEL_PATH}"
+            )
+ 
+        model = joblib.load(MODEL_PATH)
+ 
+    return model
+ 
  
  
 # --------------------------------------------------
@@ -80,11 +94,13 @@ def predict(transaction: Transaction):
         [transaction.model_dump()]
     )
  
-    prediction = model.predict(data)[0]
+    model_instance = load_model()
  
-    probability = model.predict_proba(
-        data
-    )[0][1]
+    prediction = model_instance.predict(data)[0]
+ 
+    probability = model_instance.predict_proba(
+    data
+)[0][1]
  
     return {
         "prediction": int(prediction),
