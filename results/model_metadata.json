@@ -1,0 +1,24 @@
+{
+    "best_baseline_model": "Random Forest",
+    "final_model": "Random Forest",
+    "best_parameters": {
+        "model__n_estimators": 200,
+        "model__min_samples_leaf": 10,
+        "model__max_features": "sqrt",
+        "model__max_depth": null
+    },
+    "best_cv_pr_auc": 0.9974554129086629,
+    "test_metrics": {
+        "Accuracy": 0.9999614938500178,
+        "Precision": 0.9732779097387173,
+        "Recall": 0.9975654290931223,
+        "F1": 0.9852720168319807,
+        "ROC_AUC": 0.9996146597943059,
+        "PR_AUC": 0.9986126257762303,
+        "Best_CV_PR_AUC": 0.9974554129086629
+    },
+    "training_samples": 1006570,
+    "test_samples": 1272524,
+    "model_path": "models\\fraud_detection_model.pkl",
+    "random_state": 42
+}
