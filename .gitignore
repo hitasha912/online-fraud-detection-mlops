@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+*.csv
+*.xlsx
+*.zip
+
+# Model files
+*.pkl
+*.joblib
+
+# Secrets
+.env
+*.key
+*.pem
+
+# MLflow
+mlruns/
+
+# Azure
+.azure/
+
+# OS
+.DS_Store
+Thumbs.db
