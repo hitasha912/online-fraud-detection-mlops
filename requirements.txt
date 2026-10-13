@@ -1,0 +1,13 @@
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+matplotlib
+seaborn
+joblib
+fastapi
+uvicorn
+pydantic
+mlflow
+azure-ai-ml
+azure-identity
