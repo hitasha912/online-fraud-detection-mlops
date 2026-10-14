@@ -24,6 +24,10 @@ env/
 
 # MLflow
 mlruns/
+mlartifacts/
+mlflow.db
+mlflow.db-shm
+mlflow.db-wal
 
 # Azure
 .azure/

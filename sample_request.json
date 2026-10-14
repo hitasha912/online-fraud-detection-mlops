@@ -1,0 +1,10 @@
+{
+  "step": 1,
+  "type": "TRANSFER",
+  "amount": 10000.0,
+  "oldbalanceOrg": 15000.0,
+  "newbalanceOrig": 5000.0,
+  "oldbalanceDest": 0.0,
+  "newbalanceDest": 10000.0,
+  "nameDest": "C1234567890"
+}

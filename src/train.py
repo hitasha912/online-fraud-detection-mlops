@@ -4,6 +4,7 @@ import time
 import joblib
 import pandas as pd
 import argparse
+from pathlib import Path
 
 from sklearn.model_selection import (
     train_test_split,
@@ -25,6 +26,7 @@ from sklearn.metrics import (
 )
 
 from src.preprocessing import create_feature_pipeline
+from src.mlflow_tracking import log_registered_model
 
 
 # ============================================================
@@ -1144,6 +1146,44 @@ if __name__ == "__main__":
         ]
     )
 
+    registered_model_name = os.getenv(
+        "MLFLOW_REGISTERED_MODEL_NAME",
+        "fraud_detection_model"
+    )
+    tracking_uri = os.getenv(
+        "MLFLOW_TRACKING_URI",
+        f"sqlite:///{Path(__file__).resolve().parent.parent.joinpath('mlflow.db').as_posix()}"
+    )
+    experiment_name = os.getenv(
+        "MLFLOW_EXPERIMENT_NAME",
+        "online-fraud-detection"
+    )
+    final_metrics = {
+        key: float(value)
+        for key, value in (
+            tuned_results_df.iloc[0]
+            .drop("Model")
+            .to_dict()
+            .items()
+        )
+    }
+
+    model_info = log_registered_model(
+        model=final_model,
+        model_name=final_model_name,
+        registered_model_name=registered_model_name,
+        tracking_uri=tracking_uri,
+        experiment_name=experiment_name,
+        input_example=X_test.head(5),
+        metrics=final_metrics,
+        parameters={
+            **final_search.best_params_,
+            "random_state": RANDOM_STATE,
+            "training_samples": len(X_train),
+            "test_samples": len(X_test)
+        }
+    )
+
     metadata = {
 
         "best_baseline_model":
@@ -1173,6 +1213,18 @@ if __name__ == "__main__":
 
         "model_path":
             final_model_path,
+
+        "mlflow_run_id":
+            model_info.run_id,
+
+        "mlflow_model_uri":
+            model_info.model_uri,
+
+        "mlflow_registered_model_name":
+            registered_model_name,
+
+        "mlflow_registered_model_version":
+            model_info.registered_model_version,
 
         "random_state":
             RANDOM_STATE
